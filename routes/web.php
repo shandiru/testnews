@@ -25,3 +25,7 @@ Route::get('/car/{name}', [CarController::class, 'show'])->name('car.show');
 Route::get('/product/{name}', [ProductController::class, 'show'])->name('product.show');
 Route::get('/', [HomeController::class, 'index']);
 
+Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/cart/quantity', [CartController::class, 'updateQuantity'])->name('cart.quantity');

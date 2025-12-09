@@ -1,51 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="max-w-3xl mx-auto bg-white shadow rounded-lg p-6">
+    <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
 
-<h2 class="text-2xl font-bold mb-6">My Cart</h2>
-
-@foreach($cart as $index => $item)
-<div id="cartItem-{{ $index }}" 
-     class="bg-white border border-gray-200 rounded-lg p-4 flex items-center gap-4 shadow-sm hover:shadow-md transition">
-
-    {{-- IMAGE --}}
-    <div class="w-20 h-20 rounded-md overflow-hidden bg-gray-100 border">
-        @if($item['image'])
-            <img src="{{ asset('storage/' . $item['image']) }}" class="w-full h-full object-cover" />
-        @endif
-    </div>
-
-    {{-- DETAILS --}}
-    <div class="flex-1">
-        <h3 class="text-lg font-semibold">{{ $item['title'] }}</h3>
-        <p class="text-sm text-gray-500">{{ ucfirst($item['type']) }}</p>
-
-        {{-- QUANTITY --}}
-        <div class="flex items-center gap-3 mt-2">
-            <button onclick="updateQty({{ $index }}, 'minus')"
-                class="w-8 h-8 flex items-center justify-center bg-gray-200 rounded hover:bg-gray-300">–</button>
-
-            <span class="item-qty text-lg font-bold">{{ $item['quantity'] }}</span>
-
-            <button onclick="updateQty({{ $index }}, 'plus')"
-                class="w-8 h-8 flex items-center justify-center bg-gray-200 rounded hover:bg-gray-300">+</button>
-        </div>
-    </div>
-
-    {{-- PRICE --}}
-    <div class="text-right">
-        <p class="item-total text-xl font-bold text-green-600">
-            ${{ number_format($item['price'] * $item['quantity'], 2) }}
-        </p>
-        <p class="text-xs text-gray-500">${{ number_format($item['price'], 2) }}/each</p>
-    </div>
-
-    {{-- REMOVE --}}
-    <button onclick="removeFromCart({{ $index }})"
-        class="bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 ml-4">
-        Remove
-    </button>
+    @if(count($cart) > 0)
+        <table class="w-full text-left border">
+            <thead>
+                <tr class="border-b">
+                    <th class="p-2">Title</th>
+                    <th class="p-2">Type</th>
+                    <th class="p-2">Price</th>
+                    <th class="p-2">Quantity</th>
+                    <th class="p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($cart as $item)
+                    <tr class="border-b" id="cart-item-{{ $item['type'] }}-{{ $item['id'] }}">
+                        <td class="p-2">{{ $item['title'] }}</td>
+                        <td class="p-2">{{ ucfirst($item['type']) }}</td>
+                        <td class="p-2">${{ number_format($item['price']) }}</td>
+                        <td class="p-2" id="quantity-{{ $item['type'] }}-{{ $item['id'] }}">{{ $item['quantity'] }}</td>
+                        <td class="p-2">
+                            <button onclick="updateQuantity({{ $item['id'] }}, '{{ $item['type'] }}', 'increment')" class="bg-green-500 text-white px-2 py-1 rounded">+</button>
+                            <button onclick="updateQuantity({{ $item['id'] }}, '{{ $item['type'] }}', 'decrement')" class="bg-red-500 text-white px-2 py-1 rounded">−</button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p>Your cart is empty.</p>
+    @endif
 </div>
-@endforeach
-
 @endsection
