@@ -1,6 +1,6 @@
 <div class="bg-white shadow rounded-lg overflow-hidden p-4">
 
-    <a href="{{ route('car.show', $car->id) }}">
+    <a href="{{ route('car.show', $car->title) }}">
         @if($car->images)
             <img src="{{ asset('storage/' . $car->images[0]) }}"
                  class="w-full h-40 object-cover rounded mb-3" />

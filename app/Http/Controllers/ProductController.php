@@ -6,9 +6,9 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function show($id)
+    public function show($name)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::where('name', $name)->firstOrFail();
         return view('products.show', compact('product'));
     }
 }
