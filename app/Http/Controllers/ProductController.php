@@ -8,7 +8,7 @@ class ProductController extends Controller
 {
     public function show($name)
     {
-        $product = Product::where('name', $name)->firstOrFail();
+        $product = Product::where('title', $name)->firstOrFail();
         return view('products.show', compact('product'));
     }
 }
