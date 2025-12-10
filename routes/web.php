@@ -36,3 +36,4 @@ Route::post('/cart/quantity', [CartController::class, 'updateQuantity'])->name('
 
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
+Route::get('/order/{order}/download', [OrderController::class, 'downloadPdf'])->name('order.download');

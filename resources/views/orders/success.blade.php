@@ -23,5 +23,10 @@
 
     <p class="mt-4 text-xl font-bold">Total: ${{ $order->total_amount }}</p>
 
+    <a href="{{ route('order.download', $order->id) }}"
+        class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded">
+        Download Invoice PDF
+    </a>
+
 </div>
 @endsection

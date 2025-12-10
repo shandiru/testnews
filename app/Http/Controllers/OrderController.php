@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use App\Mail\OrderPlacedMail;
 
+
+use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade\Pdf;
 class OrderController extends Controller
 {
     public function checkout(Request $request)
@@ -64,7 +68,14 @@ class OrderController extends Controller
 
         // clear cart
         session()->forget('cart');
+         Mail::to($order->email)->send(new OrderPlacedMail($order));
 
         return view('orders.success', compact('order'));
+    }
+
+    public function downloadPdf(Order $order)
+    {
+        $pdf = Pdf::loadView('orders.pdf', compact('order'));
+        return $pdf->download('invoice-' . $order->id . '.pdf');
     }
 }
