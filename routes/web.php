@@ -6,6 +6,9 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 
+use App\Http\Controllers\OrderController;
+
+
 
 
 
@@ -29,3 +32,7 @@ Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.u
 
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 Route::post('/cart/quantity', [CartController::class, 'updateQuantity'])->name('cart.quantity');
+
+
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
